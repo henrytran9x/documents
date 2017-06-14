@@ -1,34 +1,46 @@
 <?php
 
 require(__DIR__.'/../../config.php');
-require_once(__DIR__.'/locallib.php');
+
 //enable debug krumo
-//require_once($CFG->dirroot.'/krumo/class.krumo.php');
+require_once($CFG->dirroot.'/krumo/class.krumo.php');
 
-//$id = required_param('id', PARAM_INT); // Document ID.
+//require Lib
+require_once('lib.php');
+require_once('locallib.php');
+require_once('edit_form.php');
+require_once('category_form.php');
+require_once('classes/document.php');
 
-// Check capability document view
 require_login();
+// Check capability document view
 $context = context_system::instance();
 require_capability('local/documents:view',$context);
 
-// Set context
+
+
+// Set Page Layout
+$PAGE->set_pagelayout('standard');
 $PAGE->set_context($context);
-// Set URL
-$PAGE->set_url('/local/mod_documents/index.php');
-// Set Layout
-$PAGE->set_pagelayout('base');
-// Set Title
-$PAGE->set_title('Documents');
-// Set Navbar
-$PAGE->navbar->add('Documents');
-// render Header
-echo $OUTPUT->header();
-?>
+$PAGE->set_url('/local/documents/index.php');
+$PAGE->set_title(get_string('txtdocument','local_documents'));
+$PAGE->set_heading(get_string('txtdocument','local_documents'));
+$PAGE->navbar->add(get_string('txtdocument','local_documents'));
 
 
-<?php echo html_writer::link('index.php?action=add',get_string('adddocument','local_mod_documents')) ?>
 
-<?php
-// Render Footer
-echo $OUTPUT->footer();
+$tpldata = array(
+    'action_url' => $PAGE->url,
+    'search_value' => isset($_POST['search']) && !empty($_POST) ? $_POST['search'] : '',
+    'table_documents' => get_table_documents(),
+);
+$render = $OUTPUT->render_from_template('local_documents/documents', $tpldata);
+    echo $OUTPUT->header();
+        // Render Form
+        if (has_capability('local/document:overcontrol', $context)) {
+            echo isset($render) ? $render : '';
+            //Check permisson allow see "Add" and "View" Category
+            echo html_writer::link(new moodle_url('/local/documents/edit.php', array('action' => 'add')), get_string('adddocument', 'local_documents'), array('class' => 'btn btn-blue'));
+            echo html_writer::link(new moodle_url('/local/documents/category.php'), get_string('listdocument', 'local_documents'), array('class' => 'pull-right btn btn-blue'));
+        }
+    echo $OUTPUT->footer();

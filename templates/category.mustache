@@ -1,0 +1,55 @@
+<form action="{{action_url}}" id="list-table-category" method="POST">
+    <input type="hidden" name="view" value="category" />
+    <input type="text" name="search" placeholder="Search category...." value="{{search_value}}" />
+    <button class="btn" id="btn_search">Search</button>
+    {{{table_category}}}
+    <button class="btn-category" id="btn_news" data-bind="add">Add</button>
+    <button class="btn-category" id="btn_delete" data-bind="delete">Delete</button>
+</form>
+{{#js}}
+    require([
+    'jquery',
+    ], function($) {
+        $(document).ready(function(){
+                var checkAll = $('#list-table-category').find('input[name="checkAll"]');
+                checkAll.click(function(event){
+                    if(this.checked){
+                        $('#list-table-category').find('.checkID').each(function () {
+                            this.checked = true;
+                        });
+                    }
+                    else{
+                        $('#list-table-category').find('.checkID').each(function () {
+                            this.checked = false;
+                         });
+                    }
+                });
+        });
+        $('.btn-category').click(function(e){
+            var bind = $(this).attr('data-bind');
+
+                switch(bind){
+                    case 'add':
+                         window.location.replace('{{action_url}}?action=add');
+                    break;
+                    case 'delete':
+                        var selected = new Array();
+                        $('.checkID:checked').each(function(){
+
+                            selected.push($(this).val());
+                            $(this).closest('tr').fadeOut(500);
+
+                        });
+                         require(['core/ajax'], function(ajax) {
+                            var process = ajax.call([
+                                    {
+
+                                    }
+                                ]);
+                         });
+                    break;
+                }
+            e.preventDefault();
+        });
+    });
+{{/js}}

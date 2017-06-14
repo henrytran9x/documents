@@ -23,4 +23,13 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         ),
     ),
+    'local/document:overcontrol' => array(
+        'riskbitmask' => RISK_PERSONAL,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_MODULE,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        ),
+    ),
+
 );
