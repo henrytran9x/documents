@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/documents/db" VERSION="20140724" COMMENT="XMLDB file for module local/documents"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+    <TABLES>
+        <TABLE NAME="mod_category_document" COMMENT="This table save information category document">
+            <FIELDS>
+                <FIELD NAME="id" SEQUENCE="true" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="ID primary keys tables" />
+                <FIELD NAME="name" SEQUENCE="false" TYPE="text"  NOTNULL="false" COMMENT="The name for define category" />
+                <FIELD NAME="summary" SEQUENCE="false" TYPE="text" NOTNULL="false" COMMENT="The summary show short description" />
+                <FIELD NAME="is_active" SEQUENCE="false" TYPE="int" LENGTH="2" NOTNULL="false" COMMENT="This flag set active/close" />
+                <FIELD NAME="created_date" SEQUENCE="false" TYPE="int" LENGTH="10" NOTNULL="false" COMMENT="This date created " />
+                <FIELD NAME="created_by" SEQUENCE="false" TYPE="int" LENGTH="10" NOTNULL="false" COMMENT="This created  by user id" />
+                <FIELD NAME="modified_date"  SEQUENCE="false" TYPE="int" LENGTH="10" NOTNULL="false" COMMENT="This date for modified" />
+                <FIELD NAME="modified_by" SEQUENCE="false" TYPE="int" LENGTH="10" NOTNULL="false" COMMENT="This modified by user id"/>
+                <FIELD NAME="sort_order" SEQUENCE="false" TYPE="int" LENGTH="11" NOTNULL="false" COMMENT="This sort order record" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="The unique id for this table mod_category_document."/>
+            </KEYS>
+        </TABLE>
+        <TABLE NAME="mod_documents" COMMENT="This table save information all record documents">
+            <FIELDS>
+                <FIELD NAME="id" SEQUENCE="true" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="ID primary keys tables" />
+                <FIELD NAME="name" SEQUENCE="false" TYPE="text"  NOTNULL="false" COMMENT="The name for define document" />
+                <FIELD NAME="summary" SEQUENCE="false" TYPE="text" NOTNULL="false" COMMENT="The summary show short description"/>
+                <FIELD NAME="is_active" SEQUENCE="false" TYPE="int" LENGTH="2" NOTNULL="false" COMMENT="This flag set active/close" />
+                <FIELD NAME="created_date" SEQUENCE="false" TYPE="int" LENGTH="10" NOTNULL="false" COMMENT="This date created " />
+                <FIELD NAME="created_by" SEQUENCE="false" TYPE="int" LENGTH="10" NOTNULL="false" COMMENT="This created  by user id" />
+                <FIELD NAME="modified_date"  SEQUENCE="false" TYPE="int" LENGTH="10" NOTNULL="false" COMMENT="This date for modified" />
+                <FIELD NAME="modified_by" SEQUENCE="false" TYPE="int" LENGTH="10" NOTNULL="false" COMMENT="This modified by user id"/>
+                <FIELD NAME="sort_order" SEQUENCE="false" TYPE="int" LENGTH="11" NOTNULL="false" COMMENT="This sort order record" />
+                <FIELD NAME="category_id" SEQUENCE="false" TYPE="int" LENGTH="10" NOTNULL="false" COMMENT="Foreign key by id category document" />
+                <FIELD NAME="url" SEQUENCE="false" TYPE="text" NOTNULL="false" COMMENT="The URL file browser" />
+                <FIELD NAME="file" SEQUENCE="false" TYPE="text"  NOTNULL="false" COMMENT="The name file upload server" />
+                <FIELD NAME="picture" SEQUENCE="false" TYPE="text"  NOTNULL="false" COMMENT="The name file picture" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="The unique id for this table mod_documents."/>
+                <KEY NAME="category_id" TYPE="foreign" FIELDS="category_id" REFTABLE="mod_category_document" REFFIELDS="id" COMMENT="The instance of mod_documents this submission belongs to."/>
+            </KEYS>
+        </TABLE>
+    </TABLES>
+</XMLDB>
